@@ -7,7 +7,7 @@ namespace GamerMJay\EasySkin\cmd;
 use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
 use pocketmine\entity\Skin;
-use pocketmine\player\player\Player;
+use pocketmine\player\Player;
 use jojoe77777\FormAPI\SimpleForm;
 use GamerMJay\EasySkin\Main;
 
