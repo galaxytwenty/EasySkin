@@ -5,5 +5,5 @@ branches:
 projects:
   EasySkin:
     path: ""
-    icon "icon.png"
+    icon: "icon.png"
 ...
