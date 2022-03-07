@@ -1,0 +1,10 @@
+name: EasySkin
+main: GamerMJay\EasySkin\Main
+api: 4.0.0
+version: 1.0.0
+author: GamerMJay
+description: A PocketMine-MP Skin Plugin
+
+permissions:
+ skin.use:
+  default: op
