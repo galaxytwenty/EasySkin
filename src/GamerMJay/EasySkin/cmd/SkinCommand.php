@@ -82,11 +82,12 @@ class SkinCommand extends Command {
 
             $skinName = $skins[$data];
             $skinPath = $skinFolder . $skinName;
+            $skinNameWithoutExt = substr($skinName, 0, -4);
             if (is_file($skinPath)) {
                 $skinData = SkinConverter::imageToSkinDataFromPngPath($skinPath);
                 self::changeSkin($player, $skinData);
                 $msg = $this->plugin->cfg->getNested("messages.skin-success");
-                $msg = str_replace("{name}", $skinName, $msg);
+                $msg = str_replace("{name}", $skinNameWithoutExt, $msg);
                 $player->sendMessage($msg);
             } else {
                 $player->sendMessage($this->plugin->cfg->getNested("messages.skin-not-exist"));
