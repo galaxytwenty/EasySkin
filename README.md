@@ -1,4 +1,6 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/RuF5gxRNfQ)
+[![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](
+https://github.com/GamerMJay/EasySkin/blob/main/LICENSE)
 # EasySkin - V1.0.0  
 
 ### Report Bug
@@ -12,8 +14,6 @@ You've found a Bug?
 |-----------|---------------|
 |`/skin`|Open the Skin menu|
 
-### License:
-This Plugin has the [Apache License 2.0](/LICENSE)! Plugin by GamerMJay!
 
 ### Credits:
 Owner: [GamerMJay](https://github.com/GamerMJay)
