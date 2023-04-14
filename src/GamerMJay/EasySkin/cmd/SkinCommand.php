@@ -16,9 +16,6 @@ use GamerMJay\EasySkin\Main;
 
 class SkinCommand extends Command {
 
-    /**
-     * @var Main
-     */
     private Main $plugin;
 
     public function __construct(Main $plugin) {
