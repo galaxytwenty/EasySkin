@@ -13,15 +13,21 @@ use pocketmine\entity\Skin;
 use pocketmine\player\Player;
 use jojoe77777\FormAPI\SimpleForm;
 use GamerMJay\EasySkin\Main;
+use pocketmine\plugin\PluginOwned;
 
-class SkinCommand extends Command {
+class SkinCommand extends Command implements PluginOwned {
 
     private Main $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("skin", "Open the Skin menu", "/skin", ["skin"]);
-        $this->setPermission("skin.use");
+        parent::__construct("easyskin", "Open the Skin menu", "/skin", ["skin"],);
+        $this->setPermission("easyskin.use");
         $this->plugin = $plugin;
+    }
+
+    public function getOwningPlugin(): Main
+    {
+        return $this->plugin;
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
@@ -50,11 +56,11 @@ class SkinCommand extends Command {
                         $baseFileName = strtolower($player->getName());
                         $imageFileName = $baseFileName . ".png";
                         $geoFileName = $baseFileName . ".json";
-                        $fullImagePath = $this->plugin->getTempFile($imageFileName);
-                        $fullGeoPath = $this->plugin->getTempFile($geoFileName);
+                        $fullImagePath = $this->getOwningPlugin()->getTempFile($imageFileName);
+                        $fullGeoPath = $this->getOwningPlugin()->getTempFile($geoFileName);
                         $skinData = SkinConverter::imageToSkinDataFromPngPath($fullImagePath);
                         self::changeSkinAndGeo($player, $skinData, $fullGeoPath);
-                        $player->sendMessage($this->plugin->cfg->getNested("messages.skin-reset"));
+                        $player->sendMessage($this->getOwningPlugin()->cfg->getNested("messages.skin-reset"));
                     } catch (Exception $exception) {
                         $player->sendMessage("§cAn unknown error occurred!");
                     }
@@ -65,15 +71,15 @@ class SkinCommand extends Command {
 
             }
         });
-        $form->setTitle($this->plugin->cfg->getNested("messages.forms.main-form.title"));
-        $form->addButton($this->plugin->cfg->getNested("messages.forms.main-form.button-1"));
-        $form->addButton($this->plugin->cfg->getNested("messages.forms.main-form.button-2"));
-        $form->addButton($this->plugin->cfg->getNested("messages.forms.main-form.button-3"));
+        $form->setTitle($this->getOwningPlugin()->cfg->getNested("messages.forms.main-form.title"));
+        $form->addButton($this->getOwningPlugin()->cfg->getNested("messages.forms.main-form.button-1"));
+        $form->addButton($this->getOwningPlugin()->cfg->getNested("messages.forms.main-form.button-2"));
+        $form->addButton($this->getOwningPlugin()->cfg->getNested("messages.forms.main-form.button-3"));
         $form->sendToPlayer($player);
     }
 
     public function openSkinList($player) {
-        $skinFolder = $this->plugin->getDataFolder() . "SkinData/";
+        $skinFolder = $this->getOwningPlugin()->getDataFolder() . "SkinData/";
         $skins = array_values(array_diff(scandir($skinFolder), array('.', '..')));
         $form = new SimpleForm(function (Player $player, $data = null) use ($skins, $skinFolder) {
             if ($data === null) {
@@ -86,15 +92,15 @@ class SkinCommand extends Command {
             if (is_file($skinPath)) {
                 $skinData = SkinConverter::imageToSkinDataFromPngPath($skinPath);
                 self::changeSkin($player, $skinData);
-                $msg = $this->plugin->cfg->getNested("messages.skin-success");
+                $msg = $this->getOwningPlugin()->cfg->getNested("messages.skin-success");
                 $msg = str_replace("{name}", $skinNameWithoutExt, $msg);
                 $player->sendMessage($msg);
             } else {
-                $player->sendMessage($this->plugin->cfg->getNested("messages.skin-not-exist"));
+                $player->sendMessage($this->getOwningPlugin()->cfg->getNested("messages.skin-not-exist"));
             }
         });
-        $form->setTitle($this->plugin->cfg->getNested("messages.forms.skin-list-form.title"));
-        $form->setContent($this->plugin->cfg->getNested("messages.forms.skin-list-form.description"));
+        $form->setTitle($this->getOwningPlugin()->cfg->getNested("messages.forms.skin-list-form.title"));
+        $form->setContent($this->getOwningPlugin()->cfg->getNested("messages.forms.skin-list-form.description"));
         foreach ($skins as $key => $value) {
             if (str_contains($value, ".png")) {
                 $form->addButton(str_replace(".png", "", $value));
@@ -115,9 +121,9 @@ class SkinCommand extends Command {
                     try {
                         $baseFileName = "Slim";
                         $geoFileName = $baseFileName . ".json";
-                        $fullGeoPath = $this->plugin->getGeoFile($geoFileName);
+                        $fullGeoPath = $this->getOwningPlugin()->getGeoFile($geoFileName);
                         self::changeGeo($player, $fullGeoPath);
-                        $player->sendMessage($this->plugin->cfg->getNested("messages.geo-change-slim"));
+                        $player->sendMessage($this->getOwningPlugin()->cfg->getNested("messages.geo-change-slim"));
                     } catch (Exception $exception) {
                         $player->sendMessage("§cAn unknown error occurred!");
                     }
@@ -126,17 +132,17 @@ class SkinCommand extends Command {
                     try {
                         $baseFileName = "Normal";
                         $geoFileName = $baseFileName . ".json";
-                        $fullGeoPath = $this->plugin->getGeoFile($geoFileName);
+                        $fullGeoPath = $this->getOwningPlugin()->getGeoFile($geoFileName);
                         self::changeGeo($player, $fullGeoPath);
-                        $player->sendMessage($this->plugin->cfg->getNested("messages.geo-change-normal"));
+                        $player->sendMessage($this->getOwningPlugin()->cfg->getNested("messages.geo-change-normal"));
                     } catch (Exception $exception) {
                         $player->sendMessage("§cAn unknown error occurred!");
                     }
             }
         });
-        $form->setTitle($this->plugin->cfg->getNested("messages.forms.choice-geo-form.title"));
-        $form->addButton($this->plugin->cfg->getNested("messages.forms.choice-geo-form.button-1"));
-        $form->addButton($this->plugin->cfg->getNested("messages.forms.choice-geo-form.button-2"));
+        $form->setTitle($this->getOwningPlugin()->cfg->getNested("messages.forms.choice-geo-form.title"));
+        $form->addButton($this->getOwningPlugin()->cfg->getNested("messages.forms.choice-geo-form.button-1"));
+        $form->addButton($this->getOwningPlugin()->cfg->getNested("messages.forms.choice-geo-form.button-2"));
         $form->sendToPlayer($player);
     }
 
@@ -150,13 +156,13 @@ class SkinCommand extends Command {
     }
 
     private function changeSkinAndGeo(Player $player, string $skinData, string $fullGeoPath) : void {
-        $player->setSkin($this->plugin->skinMetaDataFromJsonFile($fullGeoPath, $skinData));
+        $player->setSkin($this->getOwningPlugin()->skinMetaDataFromJsonFile($fullGeoPath, $skinData));
         $player->sendSkin();
     }
 
     private function changeGeo(Player $player, string $fullGeoPath) : void {
         $skinData = $player->getSkin()->getSkinData();
-        $player->setSkin($this->plugin->skinMetaDataFromJsonFile($fullGeoPath, $skinData));
+        $player->setSkin($this->getOwningPlugin()->skinMetaDataFromJsonFile($fullGeoPath, $skinData));
         $player->sendSkin();
     }
 
