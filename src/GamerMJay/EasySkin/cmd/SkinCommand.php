@@ -143,8 +143,11 @@ class SkinCommand extends Command {
     }
 
     private function changeSkin(Player $player, string $skinName) : void {
-        $player->setSkin(new Skin($player->getSkin()->getSkinId(), $skinName));
-        $player->sendMessage("§cAn unknown error occurred!");
+        try {
+            $player->setSkin(new Skin($player->getSkin()->getSkinId(), $skinName));
+        } catch (Exception $exception) {
+            $player->sendMessage("§cAn unknown error occurred!");
+        }
         $player->sendSkin();
     }
 
