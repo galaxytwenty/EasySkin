@@ -4,7 +4,7 @@ branches:
 - main
 projects:
   EasySkin:
-    path: ""
+    path: "GamerMJay/EasySkin"
     icon: "icon.png"
     libs:
       - src: HimbeersaftLP/LibSkin/LibSkin
