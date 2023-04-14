@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/RuF5gxRNfQ)
 [![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](
 https://github.com/GamerMJay/EasySkin/blob/main/LICENSE)
-# EasySkin - V1.0.0  
+# EasySkin - V1.1.0  
 
 ### Report Bug
 You've found a Bug?
