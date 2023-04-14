@@ -8,4 +8,6 @@ projects:
     icon: "icon.png"
     libs:
       - src: HimbeersaftLP/LibSkin/LibSkin
+      - src: https://poggit.pmmp.io/ci/supercrafter333/FormAPI/libFormAPI
+        version: ^2.1.0
 ...
