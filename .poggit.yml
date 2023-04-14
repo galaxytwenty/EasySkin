@@ -6,4 +6,6 @@ projects:
   EasySkin:
     path: ""
     icon: "icon.png"
+    libs:
+      - src: HimbeersaftLP/LibSkin/LibSkin
 ...
